@@ -1,0 +1,30 @@
+Total Revenue = SUM(sales[net_revenue])
+
+Total Profit = SUM(sales[net_profit])
+
+Total Orders = DISTINCTCOUNT(sales[order_id])
+
+Total Customers = DISTINCTCOUNT(sales[customer_id])
+
+Profit Margin % = DIVIDE([Total Profit], [Total Revenue], 0)
+
+Average Order Value = DIVIDE([Total Revenue], [Total Orders], 0)
+
+Returned Value = SUM(sales[returned_amount])
+
+Return Line Rate % =
+DIVIDE(
+    CALCULATE(COUNTROWS(sales), sales[order_status] = "Returned"),
+    COUNTROWS(sales),
+    0
+)
+
+Revenue Previous Month =
+CALCULATE([Total Revenue], DATEADD('Calendar'[Date], -1, MONTH))
+
+Revenue MoM Growth % =
+DIVIDE([Total Revenue] - [Revenue Previous Month], [Revenue Previous Month], 0)
+
+Revenue YTD = TOTALYTD([Total Revenue], 'Calendar'[Date])
+
+Profit YTD = TOTALYTD([Total Profit], 'Calendar'[Date])
